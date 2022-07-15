@@ -3,9 +3,10 @@
 */
 
 body {
-  font-family: $serif-font-family;
-  font-size: 18px;
-  color: $body-color;
+  font-family: $sans-serif-font-family;
+  font-size: 1em;// 18px;
+  // color: $body-color;
+  color: #000;
   line-height: 1.75rem;
 }
 
