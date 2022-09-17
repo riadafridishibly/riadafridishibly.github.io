@@ -5,13 +5,17 @@
 code,
 pre {
   font-family: $code-font-family;
+  tab-size: 4;
 }
+
 code {
   padding: .25em .5em;
   font-size: .8rem;
   background-color: $code-background-color;
   border-radius: 3px;
+  tab-size: 4;
 }
+
 pre {
   display: block;
   margin-top: 0;
@@ -23,9 +27,12 @@ pre {
   white-space: pre-wrap;
   word-break: break-all;
   word-wrap: break-word;
+  tab-size: 4;
   background-color: $code-background-color;
 }
+
 pre code {
+  tab-size: 4;
   padding: 0;
   font-size: 100%;
   color: inherit;
@@ -43,25 +50,30 @@ pre.highlight {
   margin-bottom: 1rem;
   border-radius: 4px;
 }
+
 .highlight pre {
   margin-bottom: 0;
 }
 
 /* Gist via GitHub Pages */
 .gist .gist-file {
-  font-family: $code-font-family !important;
+  font-family: $code-font-family  !important;
 }
+
 .gist .markdown-body {
   padding: 15px;
 }
+
 .gist pre {
   padding: 0;
   background-color: transparent;
 }
+
 .gist .gist-file .gist-data {
   font-size: .8rem !important;
   line-height: 1.4;
 }
+
 .gist code {
   padding: 0;
   color: inherit;
