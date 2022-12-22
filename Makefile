@@ -1,5 +1,5 @@
 local:
-	jekyll serve
+	bundle exec jekyll serve
 
 docker:
 	docker-compose up

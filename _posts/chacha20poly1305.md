@@ -1,17 +1,16 @@
 ---
-published: true
+published: false
 comments: true
 layout: post
 title: Symmetric Encryption With ChaCha20Poly1305
 author: Riad Afridi Shibly
 categories: programming
-tags: [golang, encryption,decryption]
+tags: [golang, encryption, decryption]
 image: 2022-07-14-chacha20poly1305/banner.jpg
 ---
 
-
-
 # Table Of Contents
+
 {:.no_toc}
 - 
 {:toc}
@@ -27,6 +26,7 @@ Before going any further we need to understand what Symmetric Encryption is. It'
 ## Terminology
 
 <!-- Refactor This -->
+
 Let's learn some terminology first. We'll call our data (what we want to encrypt) `plaintext`. We'll encrypt the `plaintext` and get `ciphertext`. We'll use a `key` which is our secret. So, we'll encrypt `plaintext` using the `key` and get `ciphertext`.
 
 ## ChaCha20
@@ -101,7 +101,6 @@ func main() {
 }
 ```
 
-
 কী পয়েন্টস,
 
 - সিমেট্রিক এনক্রিপশনের বেসিক।
@@ -114,6 +113,7 @@ ChaCha20 এর বেসিক
 - তারপর আবার ডিক্রিপ্ট করবো‌।
 
 কী ডেরিভেশন
+
 - পাসওয়ারড তো যেকোন সাইজের হতে পারে। তাই আমরা পাসওয়ার্ড থেকে ফিক্সড সাইজের কী ডিরাইভ করবো
 - আমরা scrypt এবং argon2id এই দুইটা এলগরিদম দেখবো
 
@@ -137,7 +137,6 @@ Previously we've seen that we must use exactly `32 bytes` (i.e. 256 bit) key to 
 // KDF takes arbitrary sized password and returns `keyLen` sized key
 func KDF(password []byte,  keyLen int) (key []byte)
 ```
-
 
 ```go
 // key should be randomly generated or derived from a function like Argon2.
@@ -187,8 +186,6 @@ var encryptedMsg []byte
 
 ## ChaCha20
 
-
-
 ### Encrypt
 
 ### Decrypt
@@ -199,7 +196,6 @@ var encryptedMsg []byte
 
 ### Poly1305
 
-##  The End
-
+## The End
 
 ## While writing this article...
