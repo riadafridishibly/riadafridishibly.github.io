@@ -10,6 +10,11 @@ Even though I've studied mechanical engineering, I have a keen interest in compu
 
 In my `Day Job`, I mostly work with Golang and JavaScript. I've worked with encryption and decryption in golang. I've written a fair bit of code for Wasm as well. Mostly converted golang code in wasm. Currenly, I've been exploring browser extensions as well.
 
+## $ whoami
+
+
+This is the most complicated philosophical question to answer. 
+
 > ## Old Content
 >
 > I love Linux. I've been using linux ever since I owned my own computer. Currently, I am using [Arch Linux](https://www.archlinux.org) as my primary operating system. I prefer command line tools over graphical one. There's no specific reason for that. Most of the time they suck less than a graphical one. My primary text editor is [vim](https://www.vim.org). I write everything or almost everything in [vim](https://www.vim.org). I use Google Docs and Google spreadsheet as a replacement of Microsoft Office. Using [pandoc](http://pandoc.org) is fun. I try to use it to write docs and make presentation.
