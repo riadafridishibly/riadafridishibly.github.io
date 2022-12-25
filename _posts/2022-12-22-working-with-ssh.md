@@ -17,6 +17,19 @@ tags: [ssh, ssh-agent, keys]
 
 ### Generate keys
 
+Default RSA key,
+
+This will generate an RSA key called `id_rsa` in the `~/.ssh/` directory.
+```sh
+ssh-keygen
+```
+
+I mostly prefer using the `ed25519` key. To generate the key run the following,
+
+```sh
+ssh-keygen -t ed25519 -f ~/.ssh/id_{name_of_the_key}
+```
+
 ### Start ssh-agent
 
 ```sh
@@ -26,16 +39,34 @@ eval $(ssh-agent)
 ### Add keys to ssh-agent
 
 ```sh
+ssh-add </path/to/your/private/key>
+```
+
+Add all private (hopefully) keys to ssh-agent.
+
+```sh
 grep -rl PRIVATE ~/.ssh | xargs ssh-add
 ```
 
 ### Add keys to a remote server
 
+```sh
+ssh-copy-id -p 22 -i ~/.ssh/id_ed25519 user@example.com
+```
+
 ### Remove keys from a remote server
 
-### Keyscan
+What I mostly do, I open the `~/.ssh/authorized_keys` file in the server and delete the key from there. This file lists all the public keys uploaded to the server.
+
+### Remove host from known_hosts file
+
+```sh
+ssh-keygen -R hostname
+```
 
 ### Debug
+
+It's useful to debug using the `ssh -v` (verbose) option. It'll tell you what's happening under the hood. The interesting line to look for is `Offering`.
 
 ## What is SSH?
 
@@ -43,7 +74,7 @@ SSH is a widely used and popular secure shell implementation that is mostly used
 
 ## Using SSH
 
-To use ssh we'll need a remote machine (we'll run one in a minute) with `openssh` server installed. Then from our computer, we can access that machine through `ssh` client program. 
+To use ssh we'll need a remote machine with the OpenSSH server installed. Then from our computer, we can access that machine through the `ssh` client program. To demonstrate this I'll use two docker containers here one as a remote machine and another as our local machine.
 
 ## Our demo machine
 
@@ -69,64 +100,85 @@ RUN echo "#!/bin/bash" >> /startup.sh && \
 CMD ["/startup.sh"]
 ```
 
-To build the docker image create a new `Dockerfile` file and then paste the code above. Then run the following command from the `Dockerfile` directory,
+This is going to be a very simple Debian-based docker image. We'll install some packages as well.
 
-Or you can directly paste this in a terminal and it'll create the file for you,
+To build the docker image let's create a new `Dockerfile` file and then paste the code above. Then run the following command from the `Dockerfile` directory,
+
+Or you can directly paste this into a terminal and it'll create the file for you,
 
 ```wrap
 echo 'RlJPTSBkZWJpYW46Ym9va3dvcm0tc2xpbQoKUlVOIERFQklBTl9GUk9OVEVORD1ub25pbnRlcmFjdGl2ZSBcCiAgYXB0LWdldCB1cGRhdGUgJiYgXAogIGFwdC1nZXQgaW5zdGFsbCAteSBcCiAgb3BlbnNzaC1zZXJ2ZXIgaXByb3V0ZTIgb3BlbnNzbAoKUlVOIHVzZXJhZGQgLXMgL2Jpbi9iYXNoIC1tIFwKICAtcCAkKG9wZW5zc2wgcGFzc3dkIC0xIHBhc3N3b3JkKSByaWFkCgpSVU4gZWNobyAiIyEvYmluL2Jhc2giID4+IC9zdGFydHVwLnNoICYmIFwKICAgIGVjaG8gInNlcnZpY2Ugc3NoIHN0YXJ0IiA+PiAvc3RhcnR1cC5zaCAmJiBcCiAgICBlY2hvICJlY2hvICdJUDonIFwkKGhvc3RuYW1lIC1JKSIgPj4gL3N0YXJ0dXAuc2ggJiYgXAogICAgZWNobyAiZXhlYyBiYXNoIFwiXCRAXCIgIiA+PiAvc3RhcnR1cC5zaCAmJiBcCiAgICBjaG1vZCAreCAvc3RhcnR1cC5zaAoKQ01EIFsiL3N0YXJ0dXAuc2giXQo=' | base64 -d > Dockerfile
 ```
 
+Then let's run this command to build a new image based on the dockerfile.
+
 ```sh
 docker build -t debian:ssh-test .
 ```
 
-To run the image run with,
+Now we want to do something different. We want to address the containers by host lookup. So we'll connect both containers to the same network. To create a new network let's run the following command.
 
 ```sh
-docker run --rm -it -h machine debian:ssh-test
+docker network create --driver bridge ssh-net
 ```
 
-It'll run a docker container and open a shell for you. But we want to access it through ssh.
+This command will create a new network called `ssh-net`. 
+
+The next thing we want to do is start two terminal sessions and open two docker container shells in two of them with the following commands. 
+
+In one of the terminals let's run this command.
+
+```sh
+docker run --rm -it -h local --name local --network ssh-net debian:ssh-test
+```
+
+This terminal will act like our local machine.
+
+On the other terminal let's run the following,
+
+```sh
+docker run --rm -it -h remote --name remote --network ssh-net debian:ssh-test
+```
+
+This one will act like our remote machine.
 
 ## Logging into the machine
 
-To login into the machine, you need to start another terminal (maybe your terminal tab or a new window) and then write the following,
+To log in to the machine, all we need to do is using `ssh` command, we can run ssh command like this,
 
 ```sh
-docker run --rm -it -h local debian:ssh-test
+ssh username@remotemachine
 ```
 
-Then enter this,
+In the demo case, we can run the following command from the local machine (notice the hostname in the terminal prompt `root@local`:/#`), 
 
-```sh
-ssh riad@<the-printed-ip>
+```
+ssh riad@remote
 ```
 
-For example,
+Then it'll ask for the password, write `password` (yee! very secure password!)
 
-```sh
-ssh riad@172.17.0.2
-```
+Congratulation! Now we're in the remote machine! The prompt will look like this!
 
-Then it'll ask for the password, you can simply write `password` (that's what is set in the container).
-
-You'll be presented with a prompt like this,
 
 ```
 riad@remote$ 
 ```
 
-Congratulations! You've Successfully logged in!
-
 ## Generating keys
 
 Now that we've logged in with the password, let's try something cool. Let's try logging in with keys! The idea here is to generate a key pair. We'll keep the private key and send the public key to the server. Then we should be able to log in without any password. Let's try this.
 
-From our local container, let's run this command
+Simply write `exit` and it'll get you out of the remote machine.
+
+```sh
+riad@remote$ exit
+```
+
+Now to generate keys, from our local container, let's run this command
 
 ```
-ssh-keygen
+root@local:/# ssh-keygen
 ```
 
 It'll ask for a bunch of questions, press `ENTER` for all of them. Now run the following command,
@@ -156,7 +208,7 @@ We've mentioned `ssh-agent` before. But what is it? If we look into the man page
 
 > ssh-agent is a program to hold private keys used for public key authentication.
 
-Before going crazy with `ssh-agent` let's try to setup the environment.
+Before going crazy with `ssh-agent` let's try to set up the environment.
 
 ## Removing keys from ssh-agent!
 
@@ -184,7 +236,7 @@ And try logging into the server!
 root@local:/# ssh riad@remote
 ```
 
-It'll ask for password!! _If not then the key probably is already added to ssh-agent!_ To remove that run `ssh-add -D`, Now try again!
+It'll ask for the password!! _If not then the key probably is already added to the ssh-agent!_ To remove that run `ssh-add -D`, Now try again!
 
 Okay! Let's try this command differently,
 
@@ -198,7 +250,7 @@ We can do this another way! This is where `ssh-agent` comes into the picture.
 
 ## Adding keys to ssh-agent
 
-Let's see if our `ssh-agent` is running! To check, let's try to print out the socket path of `ssh-agent`,
+Let's see if our `ssh-agent` is running! To check, let's try to print out the socket path of the `ssh-agent`,
 
 ```
 root@local:/# echo $SSH_AUTH_SOCK
@@ -212,8 +264,41 @@ root@local:/# eval $(ssh-agent)
 
 ## ssh verbose mode
 
-## Inspecting the offerings
+Verbose mode helps to debug common ssh issues! Like everything seems set, still can't log in! Maybe `ssh-agent` doesn't know about the key! Maybe the ssh config is wrong. And so on.
+
+Try running `ssh` command with `-v` flag.
+
+```sh
+ssh -v user@example.com
+```
+
+This command will spit out lots of logs and the most interesting one is the offering lines. 
 
 ## Using ssh config file
 
+Sometimes it's handy to use the ssh config file. The ssh config file is located `~/.ssh/config`. The syntax is like this.
+
+```sh
+Host prod
+    HostName prod01.example.com
+    User riad
+    Port 2398
+```
+
+Now with that config in place, previously we had to run,
+
+```sh
+ssh -p 2398 riad@prod01.example.com
+```
+
+Now we can simply write,
+
+```sh
+ssh prod
+```
+
+And the effect will be the same.
+
 ## Closing
+
+This article is mainly written to document some ssh things. It's not yet fully complete! I'll gradually update this article.
