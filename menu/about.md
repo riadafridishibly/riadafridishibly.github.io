@@ -6,19 +6,13 @@ permalink: /about
 
 Hi! I'm **Riad Afridi Shibly**. I've studied **Mechanical Engineering** at Khulna University of Engineering and Technology, Khulna.
 
-Even though I've studied mechanical engineering, I have a keen interest in computer science. I love problem-solving, and occasionally I solve programming problems in various Online Judge. Currently, I'm working as a Software Engineer at Evatix.
-
-In my `Day Job`, I mostly work with Golang and JavaScript. I've worked with encryption and decryption in golang. I've written a fair bit of code for Wasm as well. Mostly converted golang code in wasm. Currenly, I've been exploring browser extensions as well.
-
-## $ whoami
+Even though I've studied mechanical engineering, I have a keen interest in computer science. Currently, I'm working as a Software Engineer at Evatix.
 
 
-This is the most complicated philosophical question to answer. 
+## Skills
 
-> ## Old Content
->
-> I love Linux. I've been using linux ever since I owned my own computer. Currently, I am using [Arch Linux](https://www.archlinux.org) as my primary operating system. I prefer command line tools over graphical one. There's no specific reason for that. Most of the time they suck less than a graphical one. My primary text editor is [vim](https://www.vim.org). I write everything or almost everything in [vim](https://www.vim.org). I use Google Docs and Google spreadsheet as a replacement of Microsoft Office. Using [pandoc](http://pandoc.org) is fun. I try to use it to write docs and make presentation.
+In my `Day Job`, I mostly work with Golang and JavaScript/TypeScript. I love golang because of its simplicity and readability. I've experience building REST APIs, writing server automation tools, writing parsers for configuration files, configuring build systems using docker. I've also experience with frontend frameworks like React, svelte and solidjs. For CSS I prefer tailwindcss. I love the tailwind design system.
 
-I enjoy exploring new things. Most of the time they backfire [sad emoticon]. I love coding, cycling and reading. I browse [Quora](https://quora.com) a lot. Even though I don't ask questions, I prefer reading. Silent reader you can say.
+Other than programming, I'm very familiar with Linux servers, especially Debian-based ones. I've configured and deployed sites using Nginx.
 
-I am active on Telegram. [t.me/shibly](https://t.me/shibly). If you have any query you can simply ask me on telegram. Have a Good Day, Sir.
+I prefer writing elegant, readable and testable code following the best practice and the community guidelines of the programming language.
