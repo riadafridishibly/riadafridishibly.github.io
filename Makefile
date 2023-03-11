@@ -2,5 +2,6 @@ local:
 	bundle exec jekyll serve --incremental
 
 docker:
-	docker-compose up
+	docker compose down
+	docker compose up
 
