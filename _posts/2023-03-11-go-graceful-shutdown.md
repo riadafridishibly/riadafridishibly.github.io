@@ -121,4 +121,360 @@ From the [`signal.Notify`](https://pkg.go.dev/os/signal#Notify) docs,
 
 > Package signal will not block sending to c: the caller must ensure that c has sufficient buffer space to keep up with the expected signal rate. For a channel used for notification of just one signal value, a buffer of size 1 is sufficient.
 
-So if we don't provide buffer, `signal.Notify` won't wait for sending the signal to the channel. 
+So if we don't provide a buffer, `signal.Notify` won't wait for sending the signal to the channel. In golang, sending to an unbuffered channel will be successful when there's another goroutine waiting for receiving from that channel. Otherwise, sending operation will block. Let's demonstrate that with another simple code.
+
+
+<!-- FIXME: Provide repo link -->
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func main() {
+	fmt.Println("Process PID:", os.Getpid())
+	sigCh := make(chan os.Signal, 1) // Change this to unbuffered
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+
+	fmt.Println("Sleep started. Now press C-c")
+	time.Sleep(10 * time.Second)
+	fmt.Println("Sleep done...")
+
+	got := <-sigCh
+	fmt.Printf("Received Signal: %s, Sig Num: %d\n", got, got)
+}
+```
+
+In this case, if we press `CTRL+C` after starting the sleep, then our signal will still be registered. But if we change the `make(chan os.Signal, 1)` line to `make(chan os.Signal)` then, after starting sleep we won't be able to register the signal anymore! Try running this and the program won't exit the first time you press `CTRL+C`.
+
+## Signal Broadcast
+
+We've seen we can capture the signal. But how do we propagate the signal throughout our app? 
+
+Before exploring this area, let's quickly review the channel behaviors.
+
+- Sending to or receiving from nil channel will block.
+- Sending to a closed channel will panic.
+- Receiving from a closed channel returns immediately, and can be used multiple times.
+
+Let's see a few different cases where we can implement signal broadcast.
+
+### When we already have channel
+
+If we have something like this, where we're just sending or receiving data from a channel we can easily implement closing the loop.
+
+```go
+func splitString(s string) <-chan string {
+	ch := make(chan string)
+	go func() {
+		defer close(ch)
+		for _, v := range strings.Fields(s) {
+			ch <- v
+		}
+	}()
+	return ch
+}
+```
+
+Let's convert this code to this,
+
+```go
+func splitStringDone(s string, done <-chan bool) <-chan string {
+	ch := make(chan string)
+	go func() {
+		defer close(ch)
+		for _, v := range strings.Fields(s) {
+			select {
+			case ch <- v:
+			case <-done:
+				return
+			}
+		}
+	}()
+	return ch
+}
+```
+
+Here we're taking a `done` channel. When done is closed, we'll receive from `<-done` immediately and return.
+
+This way we can handle the closing signal. Here's the full example.
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"strings"
+	"sync"
+	"syscall"
+	"time"
+)
+
+func splitStringDone(s string, done <-chan bool) <-chan string {
+	ch := make(chan string)
+	go func() {
+		defer close(ch)
+		for _, v := range strings.Fields(s) {
+			select {
+			case ch <- v:
+				// This select is for blocking for 1 sec
+				select {
+				case <-time.After(1 * time.Second):
+				case <-done:
+					return
+				}
+			case <-done:
+				return
+			}
+		}
+	}()
+	return ch
+}
+
+func printer(name string, ch <-chan string, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for v := range ch {
+		fmt.Printf("%s: value = %v\n", name, v)
+	}
+}
+
+func main() {
+	fmt.Println("Process PID:", os.Getpid())
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+
+	done := make(chan bool)
+	go func() {
+		got := <-sigCh
+		fmt.Printf("Received Signal: %s, Sig Num: %d\n", got, got)
+
+		// Close the done channel to signal the `splitStringDone` function that
+		// we are no longer interested, we're quiting.
+		close(done)
+	}()
+
+	ch := splitStringDone("a b c d e f g", done)
+
+	var wg sync.WaitGroup
+
+	wg.Add(2)
+	go printer("Printer 1", ch, &wg)
+	go printer("Printer 2", ch, &wg)
+
+	wg.Wait()
+
+	fmt.Println("Exited!")
+}
+```
+
+Here we're handling the signal in a goroutine. So either our loop ends or we initiate cancellation with a signal. When we catch any signal we simply close the `done` channel. And in the select block `<-done` is selected and we return.
+
+### Dealing with blocking functions
+
+Sometimes we may have a blocking function. With a blocking function, we can't simply use select, if we do we'll just block the case (that's why we didn't put `time.Sleep(1 * time.Second)` in the previous example. we've used another select.).
+
+When we are in blocking state, the select switch won't help us. Let's simulate blocking state with this function,
+
+```go
+func blockingFunc() (string, error) {
+	fmt.Println("Blocking func started, will sleep for 10 sec")
+	defer fmt.Println("Blocking func finished")
+
+	time.Sleep(10 * time.Second)
+	return "some value", nil
+}
+```
+
+This function prints something at the start, then it sleeps for 10 seconds and returns a string and an error. Finally, it prints its status that the function has exited.
+
+If we call this function directly we'll block our program for 10 seconds. In the meantime, the signal catcher won't work. To demonstrate the problem let's run the following program and press `CTRL+C` when the program prints `Blocking func started`. Our signal won't exit the program, rather it'll hang for 10 seconds and the program will exit. The problem is in the select block. Because as soon as we start executing `blockingFunc` we block the main thread. We are already in `default` case of the select block. so `case <-done:` won't be executed anymore.
+
+Here's the full code. 
+
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func blockingFunc() (string, error) {
+	fmt.Println("Blocking func started, will sleep for 10 sec")
+	defer fmt.Println("Blocking func finished")
+
+	time.Sleep(10 * time.Second)
+	return "some value", nil
+}
+
+func nonresponsive(done <-chan bool) (string, error) {
+	select {
+	case <-done:
+		return "", errors.New("cancelled operation")
+	default:
+		return blockingFunc() // select won't do anything
+	}
+}
+
+func main() {
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
+
+	done := make(chan bool)
+	go func() {
+		<-sig
+		close(done)
+	}()
+	v, err := nonresponsive(done)
+	fmt.Printf("Value: %q, err: %v\n", v, err)
+}
+```
+
+We don't want this behavior, we want our program more responsive. To make it responsive we can execute the blocking function in another goroutine and send it results to another channel. Let's rewrite the `nonresponsive` function in a responsive manner.
+
+```go
+func responsive(done <-chan bool) (string, error) {
+	type result struct {
+		value string
+		err   error
+	}
+	ch := make(chan result)
+	go func() {
+		v, err := blockingFunc()
+		ch <- result{v, err}
+	}()
+	select {
+	case <-done:
+		return "", errors.New("process cancelled")
+	case v := <-ch:
+		return v.value, v.err
+	}
+}
+```
+
+Here we've defined new type `result`. This struct is simply represents the return values of the `blockingFunc`. We create a new channel `ch`, and spawn a new goroutine and send the result back to the channel. Now the select is blocking. It's waiting for either of the two, value from `done` channel or value from `ch` channel.
+
+So if we receive value from `done` before `ch` then we'll return immediately. So our blocking state is now gone. 
+
+Let's try the next code snippet.
+
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func blockingFunc() (string, error) {
+	fmt.Println("Blocking func started, will sleep for 10 sec")
+	defer fmt.Println("Blocking func finished")
+
+	time.Sleep(10 * time.Second)
+	return "some value", nil
+}
+
+func responsive(done <-chan bool) (string, error) {
+	type result struct {
+		value string
+		err   error
+	}
+	ch := make(chan result)
+	go func() {
+		v, err := blockingFunc()
+		ch <- result{v, err}
+	}()
+	select {
+	case <-done:
+		return "", errors.New("process cancelled")
+	case v := <-ch:
+		return v.value, v.err
+	}
+}
+
+func main() {
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
+
+	done := make(chan bool)
+	go func() {
+		<-sig
+		close(done)
+	}()
+	v, err := responsive(done)
+	fmt.Printf("Value: %q, err: %v\n", v, err)
+}
+```
+
+We can use the previous example, but I think the context way is cleaner. Go 1.20 introduced [WithCancelCause](https://pkg.go.dev/context#WithCancelCause), we can use that here. 
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func blockingFunc() (string, error) {
+	fmt.Println("Blocking func started, will sleep for 30 sec")
+	defer fmt.Println("Blocking func finished")
+
+	time.Sleep(30 * time.Second)
+	return "some value", nil
+}
+
+func responsive(ctx context.Context) (string, error) {
+	type ret struct {
+		value string
+		err   error
+	}
+	ch := make(chan ret)
+	go func() {
+		v, err := blockingFunc()
+		ch <- ret{v, err}
+	}()
+	select {
+	case <-ctx.Done():
+		return "", context.Cause(ctx)
+	case v := <-ch:
+		return v.value, v.err
+	}
+}
+
+func main() {
+	fmt.Println("PID:", os.Getpid())
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
+	ctx, cancel := context.WithCancelCause(context.Background())
+
+	go func() {
+		got := <-sig
+		cancel(fmt.Errorf("signal %s", got))
+	}()
+
+	v, err := responsive(ctx)
+	fmt.Printf("Value: %q, err: %v\n", v, err)
+}
+```
+
+## Signal Reset
