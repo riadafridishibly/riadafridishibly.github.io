@@ -2,7 +2,7 @@
 published: true
 comments: true
 layout: post
-title: Graceful Shutdown in Golang
+title: Signal handling and graceful shutdown in Go
 author: Riad Afridi Shibly
 categories: programming
 tags: [signal, graceful, shutdown, channel]
