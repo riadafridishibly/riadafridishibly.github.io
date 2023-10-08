@@ -15,7 +15,7 @@ tags: [golang]
 
 _So you want to use the new shiny structured logging library in golang_
 
-## `log/slog`
+## log/slog
 
 `slog` (a _structured_ logging library in Go) has been included in the Go standard library starting from version 1.21. While Go already had a logging library, it was considered too simple for most use cases. For starters, it lacked the leveled logging feature. To achieve leveled logging, you had to create multiple loggers with the level as a prefix and direct them all to the same `io.Writer`. This package, [spf13/jwalterweatherman](https://github.com/spf13/jwalterweatherman), accomplishes exactly that. There are also several third-party, excellent logging libraries available for structured logging, such as [rs/zerolog](https://github.com/rs/zerolog), [uber-go/zap](https://github.com/uber-go/zap), and [sirupsen/logrus](https://github.com/sirupsen/logrus), to name a few. Now that structured logging is included in the standard library, let's give it a try.
 
