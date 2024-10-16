@@ -12,6 +12,7 @@
 
 # jekyll-paginate configuration
 paginate: 5
+url: "https://riad.run"
 
 # Build settings
 markdown: kramdown
