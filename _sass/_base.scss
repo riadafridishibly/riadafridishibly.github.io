@@ -4,15 +4,16 @@
 
 body {
   font-family: $sans-serif-font-family;
-  font-size: 1em;// 18px;
-  // color: $body-color;
-  color: #000;
+  font-size: 16px; // 18px;
+  font-weight: 400;
+  font-style: normal;
+  color: $body-color;
   line-height: 1.75rem;
 }
 
 @media (max-width: $elements-responsive-width) {
   body {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5rem;
   }
   body h1 {
@@ -20,7 +21,7 @@ body {
   }
 }
 
-h1{
+h1 {
   font-size: 2rem;
 }
 
@@ -28,8 +29,14 @@ h1 a {
   text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: $sans-serif-font-family;
+  font-weight: 400;
   color: $dark-gray-color;
 }
 
@@ -71,11 +78,14 @@ table {
   width: 100%;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
 }
 
-th, td {
+th,
+td {
   padding: 15px;
   text-align: left;
 }

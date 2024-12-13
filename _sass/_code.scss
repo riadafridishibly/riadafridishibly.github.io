@@ -9,8 +9,8 @@ pre {
 }
 
 code {
-  padding: .25em .5em;
-  font-size: .8rem;
+  padding: 0.25em 0.5em;
+  font-size: 0.9rem;
   background-color: $code-background-color;
   border-radius: 3px;
   tab-size: 4;
@@ -21,7 +21,7 @@ pre {
   margin-top: 0;
   margin-bottom: 1rem;
   padding: 1rem;
-  font-size: .8rem;
+  font-size: 0.9rem;
   line-height: 1.4;
   white-space: pre;
   white-space: pre-wrap;
@@ -57,7 +57,7 @@ pre.highlight {
 
 /* Gist via GitHub Pages */
 .gist .gist-file {
-  font-family: $code-font-family  !important;
+  font-family: $code-font-family !important;
 }
 
 .gist .markdown-body {
@@ -70,7 +70,7 @@ pre.highlight {
 }
 
 .gist .gist-file .gist-data {
-  font-size: .8rem !important;
+  font-size: 0.8rem !important;
   line-height: 1.4;
 }
 
