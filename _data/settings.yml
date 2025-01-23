@@ -4,7 +4,8 @@ disqus:
   disqus_shortname: "riadafridishibly"
 
 # If you are not using Google Analytics, please change 'google-ID' to an empty string
-google-ID: "UA-138929198-1"
+# Now updated in source. Check google-analytics.html
+google-ID: ""
 
 menu:
   - { name: "About", url: "about.html" }
