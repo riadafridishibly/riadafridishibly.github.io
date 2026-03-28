@@ -8,11 +8,6 @@ categories: programming
 tags: [git, forgejo, devops, self-hosted]
 ---
 
-## Table Of Contents
-
-1. Table Of Contents
-{:toc}
-
 Recently we migrated our internal git server from GitLab CE to Forgejo. The experience has been great, IMHO.
 
 We were running GitLab for a very long time. It served us well for so many years. Recently I updated it to the latest version. That's when the problems began. It started failing randomly with lots of network errors. They updated the UI and probably introduced a lot of bloat, but the performance degradation was unmanageable — though to be fair, we were running that on a small server with only 3GB of RAM.
