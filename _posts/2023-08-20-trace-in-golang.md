@@ -2,10 +2,10 @@
 published: true
 comments: true
 layout: post
-title: Trace Log in Golang
-author: Riad Afridi Shibly
-categories: programming
-tags: [trace, golang]
+title: Trace Logging in Golang
+description: "Add a TRACE log level to a Go program to observe code execution paths, using runtime caller info to report the file and line that logged."
+categories: [programming]
+tags: [golang, logging, trace, debugging]
 ---
 
 _Disclaimer: This article is not about `runtime/trace` package or trace profiling functionalities._

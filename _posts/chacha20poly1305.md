@@ -3,7 +3,6 @@ published: false
 comments: true
 layout: post
 title: Symmetric Encryption With ChaCha20Poly1305
-author: Riad Afridi Shibly
 categories: programming
 tags: [golang, encryption, decryption]
 image: 2022-07-14-chacha20poly1305/banner.jpg

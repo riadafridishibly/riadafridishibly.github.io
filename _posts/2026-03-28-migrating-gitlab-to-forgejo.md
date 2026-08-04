@@ -3,9 +3,9 @@ published: true
 comments: true
 layout: post
 title: Migrating from GitLab CE to Forgejo
-author: Riad Afridi Shibly
-categories: programming
-tags: [git, forgejo, devops, self-hosted]
+description: "Why we moved 300+ repos off a struggling self-hosted GitLab CE onto Forgejo, how the migration went, and how it performs on 1.5GB of RAM."
+categories: [programming]
+tags: [git, forgejo, gitlab, devops, self-hosted]
 ---
 
 Recently we migrated our internal git server from GitLab CE to Forgejo. The experience has been great, IMHO.

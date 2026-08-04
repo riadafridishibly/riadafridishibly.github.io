@@ -3,7 +3,6 @@ published: false
 comments: true
 layout: post
 title: Why do we need MAC?
-author: Riad Afridi Shibly
 categories: programming
 tags: [cryptography]
 image: 2022-07-16-why-do-we-need-mac/banner.jpg

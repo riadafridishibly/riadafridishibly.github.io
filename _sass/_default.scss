@@ -2,22 +2,29 @@
   Site container
 */
 
+/* Capped at the reading measure rather than a fixed 888px, which ran to ~110
+   characters per line at the 16px body size. */
 .container {
   margin-left: auto;
   margin-right: auto;
-  width: 888px;
+  width: 90vw;
+  max-width: $measure;
 }
 
 .content-container {
   margin-bottom: 4rem;
 }
 
-/*48em*/
-
-@media (max-width: $container-responsive-width) {
-  .container {
-    width: 90vw;
-  }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /*
@@ -35,13 +42,22 @@
   color:black;
 }
 
+/* Branding, not a document heading — keeps h1 free for real page titles */
+.header-title {
+  font-size: 1rem;
+  font-weight: 400;
+  color: $dark-gray-color;
+  margin: 1.17rem 0;
+}
+
 .header-title a {
-  font-size: 2rem;
+  font-size: 1.25rem;
   text-decoration: none;
   color: $body-color;
 }
 
 .header-subtitle {
+  font-size: 0.85rem;
   color: $light-gray-color;
 }
 

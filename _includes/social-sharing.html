@@ -1,5 +1,7 @@
 <div class="post-date">{{ site.data.settings.sharing_button_prompt }}</div>
+{% assign share_url = page.url | absolute_url | uri_escape %}
+{% assign share_title = page.title | uri_escape %}
 <div class="sharing-icons">
-  <a href="https://twitter.com/intent/tweet?text={{ page.title }}&amp;url={{ site.github.url }}{{ page.url }}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-  <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.github.url }}{{ page.url }}&amp;title={{ page.title }}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+  <a href="https://twitter.com/intent/tweet?text={{ share_title }}&amp;url={{ share_url }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}&amp;title={{ share_title }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
 </div>

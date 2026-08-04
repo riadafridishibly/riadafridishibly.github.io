@@ -9,12 +9,7 @@
   color: $light-gray-color;
   font-family: $sans-serif-font-family;
   font-size:0.8rem;
-}
-
-@media (max-width: $elements-responsive-width) {
-  .posts h1 {
-    font-size: 1.5rem;
-  }
+  line-height: 1.5;
 }
 
 .related {
@@ -28,4 +23,8 @@
 
 .related-posts a {
   text-decoration: none;
+}
+
+.related-posts a:hover {
+  text-decoration: underline;
 }

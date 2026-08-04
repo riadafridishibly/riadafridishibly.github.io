@@ -3,9 +3,41 @@
 */
 
 .posts-container {
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
   padding: 0px;
   list-style: none;
+}
+
+/* Post titles in the feed are h2 (the page keeps a single h1) but lead the entry */
+.posts-container h2 {
+  font-size: 1.375rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.posts-container h2 a {
+  text-decoration: none;
+}
+
+.posts-container p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.posts-container .post-date {
+  margin-bottom: 0;
+}
+
+@media (max-width: $elements-responsive-width) {
+  .posts-container h2 {
+    font-size: 1.25rem;
+  }
+}
+
+.archive-list {
+  padding: 0px;
+  list-style: none;
+  margin-bottom: 2rem;
 }
 
 /*

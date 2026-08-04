@@ -3,7 +3,6 @@ published: false
 comments: true
 layout: post
 title: Packaging for Debian
-author: Riad Afridi Shibly
 categories: programming
 tags: [linux, debian, packaging]
 # image: /banner.jpg

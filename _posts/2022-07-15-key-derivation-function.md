@@ -3,7 +3,6 @@ published: false
 comments: true
 layout: post
 title: Key Derivation Functions
-author: Riad Afridi Shibly
 categories: programming
 tags: [cryptography]
 image: 2022-07-15-key-derivation-function/banner.jpg

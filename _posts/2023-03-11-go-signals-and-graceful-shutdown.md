@@ -2,23 +2,24 @@
 published: true
 comments: true
 layout: post
-title: Signal handling and graceful shutdown in Go
-author: Riad Afridi Shibly
-categories: programming
-tags: [signal, graceful, shutdown, channel]
-image: 2023-03-11-go-graceful-shutdown/broken_computer.jpg
+title: Signal Handling and Graceful Shutdown in Go
+description: "Catch SIGINT and SIGTERM in Go, broadcast the shutdown to every goroutine, unblock blocking calls and shut down an HTTP server cleanly."
+categories: [programming]
+tags: [golang, signals, graceful-shutdown, concurrency]
+image: /assets/img/2023-03-11-go-graceful-shutdown/broken_computer.jpg
+image_alt: "Graceful shutdown in Go"
 ---
 
 
 
-# Table Of Contents
+## Table Of Contents
 {:.no_toc}
 - 
 {:toc}
 
 **All the code samples used in this post are available** [_here._](https://github.com/riadafridishibly/go-graceful-shutdown)
 
-# Graceful Shutdown
+## Graceful Shutdown
 
 When a process is running for a long time, sometimes we want to quit the running program. If it's a CLI process we press `CTRL+C` or send specific kill signals. For GUI applications we quit from the menu or if the process becomes nonresponsive we find the `PID` of the process and then run `kill -9 <PID>`. These actions trigger an event and the event is sent to the specific process which sometimes causes the process to exit. In a stateful program, we want to save the states or perform cleanups before exiting the process. This safe exit process is called graceful shutdown.
 

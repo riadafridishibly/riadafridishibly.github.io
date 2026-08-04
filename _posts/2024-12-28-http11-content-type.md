@@ -2,10 +2,10 @@
 published: true
 comments: true
 layout: post
-title: "[Part 2] Understanding HTTP/1.1: Content Type"
-author: Riad Afridi Shibly
-categories: programming
-tags: [http, tcp, network, golang]
+title: "Understanding HTTP/1.1: Content-Type in Go (Part 2)"
+description: "How the Content-Type header decides what a browser does with your response, plus a hand-rolled http.ResponseWriter implementation in Go."
+categories: [programming]
+tags: [http, tcp, networking, golang]
 ---
 
 
@@ -139,7 +139,7 @@ func handleConn(c net.Conn) {
 
 Now if we visit [https://localhost:2000](https://localhost:2000), the page will look like this. 
 
-![Simple HTTP Response](../assets/img/2024-12-28-http11-content-type/simple-html-response.png)
+![Browser rendering a simple HTML response](/assets/img/2024-12-28-http11-content-type/simple-html-response.png)
 
 The question is how does browser know we're sending HTML? Why didn't browser render the text just like this?
 

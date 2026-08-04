@@ -3,10 +3,11 @@ published: true
 comments: true
 layout: post
 title: String Hashing in C++
-author: Riad Afridi Shibly
-categories: programming
-tags: [c++, hasing]
-image: 2019-04-22-string-hashing-in-cpp/banner.jpg
+description: "How string hashing works in C++ — using std::hash, why collisions happen, and how to write your own polynomial rolling hash function."
+categories: [programming]
+tags: [c++, hashing, algorithms]
+image: /assets/img/2019-04-22-string-hashing-in-cpp/banner.jpg
+image_alt: "String hashing in C++"
 ---
 
 ## What is Hashing?

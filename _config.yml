@@ -13,6 +13,7 @@
 # jekyll-paginate configuration
 paginate: 5
 url: "https://riad.run"
+lang: en-US
 
 # Build settings
 markdown: kramdown
@@ -20,10 +21,52 @@ highlighter: rouge
 permalink: /:title
 plugins: [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-tag]
 
+sass:
+  style: compressed
+
 # Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
 title: "random thoughts"
-description: "a journey to somewhere"
-author: "riad"
+# Shown in the site header/footer and appended to the home page <title>
+tagline: "a journey to somewhere"
+# Used as the default <meta name="description"> for pages without their own
+description: "Posts on Go, HTTP and networking, cryptography, Linux and developer tooling, written by Riad Afridi Shibly."
+author:
+  name: "Riad Afridi Shibly"
+  twitter: afridishibly
+  url: "https://riad.run/about"
 # RSS 2.0 can be used instead of Atom by uncommenting following two lines
 #feed:
 #  path: rss-feed.xml
+
+twitter:
+  username: afridishibly
+  card: summary_large_image
+
+# Feeds schema.org "sameAs" links for the site author
+social:
+  name: "Riad Afridi Shibly"
+  links:
+    - https://github.com/riadafridishibly
+    - https://twitter.com/afridishibly
+    - https://www.linkedin.com/in/riadafridishibly/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: true
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - Makefile
+  - README.md
+  - LICENSE.md
+  - docker-compose.yml
+  - lagrange.gemspec
+  - .prettierignore
+  - .ruby-version
+  - codes
+  - vendor

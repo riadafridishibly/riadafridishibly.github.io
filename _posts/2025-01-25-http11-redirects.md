@@ -2,10 +2,10 @@
 published: true
 comments: true
 layout: post
-title: "[Part 3] Understanding HTTP/1.1: Redirects"
-author: Riad Afridi Shibly
-categories: programming
-tags: [http, tcp, network, golang]
+title: "Understanding HTTP/1.1: Redirects in Go (Part 3)"
+description: "301 vs 302 vs 307 vs 308 — which HTTP redirect to use, which ones browsers cache, which preserve the request method, tested against a small Go server."
+categories: [programming]
+tags: [http, redirects, networking, golang]
 ---
 
 
@@ -118,7 +118,7 @@ Now Let's start with the `302` redirect. It's a temporary redirect. Open a new b
 It'll show some forms and buttons. We'll follow the server logs. That's where the interesting things are happening. Go to network tab and **Uncheck Disable Cache**.
 
 Home screen should look like this,
-![Home](../assets/img/2025-01-25-http11-redirects/home.png)
+![Redirect demo home page](/assets/img/2025-01-25-http11-redirects/home.png)
 
 Now if we press `302 Redirect` button, we'll see these lines on server logs, 
 

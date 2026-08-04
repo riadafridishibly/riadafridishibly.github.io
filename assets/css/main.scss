@@ -1,22 +1,30 @@
 ---
 ---
 
-$sans-serif-font-family: "Inter", "Raleway", "Quicksand", "Hind Siliguri",
-  sans-serif; // "Quattrocento Sans",
-$serif-font-family: "PT Serif", Georgia, "Times New Roman", serif;
-$code-font-family: "Noto Sans Mono", "Source Code Pro", monospace;
+/* Only Inter is fetched; the rest are system faces so a failed webfont load
+   lands on something with comparable metrics instead of whatever happens to
+   be installed locally. */
+$sans-serif-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Roboto, "Helvetica Neue", Arial, sans-serif;
+$code-font-family: "Noto Sans Mono", "Source Code Pro", ui-monospace,
+  SFMono-Regular, Menlo, Consolas, monospace;
 
 $body-color: hsl(222, 23%, 39%); //  #505050;
-$link-color: black;
+
+/* Same hue as the body text, saturated enough to read as a link. 7.3:1 on white. */
+$link-color: hsl(222, 60%, 42%);
+$link-hover-color: hsl(222, 70%, 30%);
 
 $code-background-color: #f5f5f5;
 $pagination-button-color: #e0e0e0;
 
 $dark-gray-color: hsl(222, 23%, 35%); // #333;
-$light-gray-color: #999;
+$light-gray-color: #6f6f6f; // 5.0:1 on white; #999 was 2.85:1 and failed WCAG AA
 $extra-light-gray-color: #ccc;
 
-$container-responsive-width: 1024px;
+/* ~76 characters at the 16px body size, the top of the comfortable range */
+$measure: 38rem;
+
 $elements-responsive-width: 30em;
 
 $icon-transition-time: 0.5s;

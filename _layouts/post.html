@@ -2,13 +2,17 @@
 layout: default
 ---
 
-<h1>
-  {{ page.title }}
-</h1>
-{% if page.image %}
-<img src="{{ site.github.url }}/assets/img/{{ page.image }}">
-{% endif %}
 <article>
+  <h1>
+    {{ page.title }}
+  </h1>
+  {% if page.image %}
+  <img
+    src="{{ page.image | relative_url }}"
+    alt="{{ page.image_alt | default: page.title | escape }}"
+    fetchpriority="high"
+  >
+  {% endif %}
   {{ content }}
 </article>
 {% if site.hide_post_date != true %}

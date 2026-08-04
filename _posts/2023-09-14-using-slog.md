@@ -2,10 +2,10 @@
 published: true
 comments: true
 layout: post
-title: Structured Logging in Golang
-author: Riad Afridi Shibly
-categories: programming
-tags: [golang]
+title: "Structured Logging in Go with log/slog"
+description: "Getting started with log/slog, Go 1.21's standard-library structured logger — levels, handlers, wrapping the logger, writing to a file, and go vet gotchas."
+categories: [programming]
+tags: [golang, logging, slog, observability]
 ---
 
 ## Table Of Content

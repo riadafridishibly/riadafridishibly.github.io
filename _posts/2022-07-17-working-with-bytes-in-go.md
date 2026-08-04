@@ -3,7 +3,6 @@ published: false
 comments: true
 layout: post
 title: Working with `[]byte` slice in golang
-author: Riad Afridi Shibly
 categories: programming
 tags: [byte, golang]
 image: 2022-07-17-working-with-bytes-in-go/banner.jpg

@@ -1,7 +1,8 @@
 ---
 layout: page
-title: about me
+title: About
 permalink: /about
+description: "Riad Afridi Shibly — backend developer working with Go, JavaScript and TypeScript, building CLI tools and developer tooling."
 ---
 
 Hi! I'm Riad. I have been working with Golang, JavaScript, TypeScript for the last couple of years. Here's what I'm...

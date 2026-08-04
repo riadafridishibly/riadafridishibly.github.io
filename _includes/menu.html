@@ -1,10 +1,14 @@
 <div class="menu">
-  <nav class="menu-content">
+  <nav class="menu-content" aria-label="Main">
     {% for item in site.data.settings.menu %}
-    <a href="{{ site.github.url }}/{{ item.url }}" target="{{ item.target | default: _self}}">{{ item.name }}</a>
+    {% if item.target == '_blank' %}
+    <a href="{{ item.url | relative_url }}" target="_blank" rel="noopener noreferrer">{{ item.name }}</a>
+    {% else %}
+    <a href="{{ item.url | relative_url }}">{{ item.name }}</a>
+    {% endif %}
     {% endfor %}
   </nav>
-  <nav class="social-icons">
+  <nav class="social-icons" aria-label="Social">
     {% include social-icons.html %}
   </nav>
 </div>

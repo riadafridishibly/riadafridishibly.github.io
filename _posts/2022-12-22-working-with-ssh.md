@@ -3,12 +3,12 @@ published: true
 comments: true
 layout: post
 title: Working with SSH in Linux and macOS
-author: Riad Afridi Shibly
-categories: programming, os-setup
-tags: [ssh, ssh-agent, keys]
+description: "Generate SSH keys, load them into ssh-agent, set up password-less login, clean up known_hosts and tame your ~/.ssh/config on Linux and macOS."
+categories: [programming, os-setup]
+tags: [ssh, ssh-agent, linux, macos]
 ---
 
-# Table of contents
+## Table of contents
 {:.no_toc}
 - 
 {:toc}

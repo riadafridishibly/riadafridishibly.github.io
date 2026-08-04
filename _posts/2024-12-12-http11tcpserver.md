@@ -2,10 +2,10 @@
 published: true
 comments: true
 layout: post
-title: "[Part 1] Understanding HTTP/1.1: TCP Server"
-author: Riad Afridi Shibly
-categories: programming
-tags: [http, tcp, network, golang]
+title: "Understanding HTTP/1.1: TCP Server in Go (Part 1)"
+description: "Build a raw TCP server in Go, inspect what curl and a browser actually send over the wire, and hand-craft a valid HTTP/1.1 response."
+categories: [programming]
+tags: [http, tcp, networking, golang]
 ---
 
 ## Table Of Contents
