@@ -1,0 +1,42 @@
+# layout: elk
+
+**.style.bold: false
+direction: down
+
+desktop: Desktop app {
+  ui: "UI\n(web renderer)"
+  main: "main process"
+  sidecar: "engine process\nstdio bridge, NDJSON JSON-RPC"
+  ui -> main: "IPC"
+  main -> sidecar: "stdin / stdout"
+}
+
+mobile: Mobile app {
+  ui: "native UI"
+  binding: "generated binding\n(in-process library)"
+  ui -> binding: "Call(method, json)"
+}
+
+cli: Dev CLI and tests {
+  cmd: "CLI command"
+}
+
+engine: "Engine: Call, Subscribe, Close" {
+  style.stroke-width: 3
+}
+
+desktop.sidecar -> engine
+mobile.binding -> engine
+cli.cmd -> engine
+
+core: Engine core {
+  store: "local store"
+  sync: "sync, one actor\nper account"
+  derive: "derive and search"
+  modules: "modules"
+}
+
+engine -> core
+
+servers: "IMAP / SMTP servers" {shape: cloud}
+core.sync -> servers

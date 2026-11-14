@@ -1,0 +1,17 @@
+shape: sequence_diagram
+
+client: "ssh client\n(your machine)"
+sshd22: "system sshd :22\n(server)"
+throwaway: "throwaway sshd :2223\n(server, 127.0.0.1)"
+
+outer: "Outer connection: you, your usual key" {
+  client -> sshd22: "1. SSH handshake, log in as you"
+  client -> sshd22: "2. open a channel to 127.0.0.1:2223"
+  sshd22 -> throwaway: "TCP connect, from the server"
+}
+
+inner: "Inner connection: root, throwaway key, carried by the channel" {
+  client -> throwaway: "3. SSH handshake, log in as root\n(sshd :22 only relays encrypted bytes)"
+  client -> throwaway: "4. exec: systemctl restart nginx"
+  throwaway -> client: "stdout, stderr, exit status 0"
+}

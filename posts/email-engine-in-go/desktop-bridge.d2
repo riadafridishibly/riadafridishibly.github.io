@@ -1,0 +1,17 @@
+shape: sequence_diagram
+
+**.style.bold: false
+
+renderer: "UI renderer"
+main: "main process"
+engine: "engine process"
+
+engine -> main: '{"method":"rpc.ready","params":{"protocol":1,"methods":[...]}}'
+renderer -> main: "call('mail.threads', {limit: 50})"
+main -> engine: '{"id":7,"method":"mail.threads","params":{"limit":50}}'
+engine -> main: '{"id":7,"result":{"threads":[...]}}'
+main -> renderer: "resolve promise"
+engine -> main: '{"method":"rpc.event","params":{"type":"threads.changed",...}}'
+main -> renderer: "event"
+renderer -> main: "abort search"
+main -> engine: '{"method":"rpc.cancel","params":{"id":8}}'

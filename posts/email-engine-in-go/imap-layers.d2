@@ -1,0 +1,13 @@
+# layout: elk
+
+**.style.bold: false
+direction: down
+
+l1: "Layer 1: generic\nmechanisms and invariants\ntrue of every server"
+l2: "Layer 2: profile\nprobed at connect time,\nstored per account and endpoint"
+l3: "Layer 3: endpoint override\nkeyed on identity, only what\nprobing cannot find"
+s: "sync strategy\nfor this account" {style.stroke-width: 3}
+inv: "safety invariants\n(never overridden)" {style.stroke-dash: 4}
+
+l1 -> l2 -> l3 -> s
+l1 -> inv: "owns" {style.stroke-dash: 4}

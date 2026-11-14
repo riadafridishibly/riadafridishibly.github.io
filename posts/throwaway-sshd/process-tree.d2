@@ -1,0 +1,29 @@
+**.style.bold: false
+
+# Indented tree, positioned by hand: rows 68px apart, each level 48px further right.
+# Tree lines are 1px boxes whose outline draws a 2px line in the edge color:
+# a trunk runs down from 23px inside the parent's left edge to the last child's
+# middle, and a stub runs from the trunk to each child.
+classes: {
+  box: {height: 44}
+  trunk: {label: ""; width: 1; style.stroke-width: 1}
+  stub: {label: ""; height: 1; width: 25; style.stroke-width: 1}
+}
+
+script: "bash throwaway-sshd.sh"           {class: box; top: 0;   left: 0}
+listener: "sshd -D (listener)"             {class: box; top: 68;  left: 48}
+c1: "sshd: connection 1"                   {class: box; top: 136; left: 96}
+cmd1: "bash -c 'apt upgrade'"              {class: box; top: 204; left: 144}
+c2: "sshd: ControlMaster connection"       {class: box; top: 272; left: 96}
+cmd2: "bash -c 'tail -f /var/log/syslog'"  {class: box; top: 340; left: 144}
+
+trunk-script:   {class: trunk; top: 44;  left: 23;  height: 46}
+trunk-listener: {class: trunk; top: 112; left: 71;  height: 182}
+trunk-c1:       {class: trunk; top: 180; left: 119; height: 46}
+trunk-c2:       {class: trunk; top: 316; left: 119; height: 46}
+
+stub-listener: {class: stub; top: 89;  left: 23}
+stub-c1:       {class: stub; top: 157; left: 71}
+stub-c2:       {class: stub; top: 293; left: 71}
+stub-cmd1:     {class: stub; top: 225; left: 119}
+stub-cmd2:     {class: stub; top: 361; left: 119}

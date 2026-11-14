@@ -1,0 +1,16 @@
+# layout: elk
+
+**.style.bold: false
+direction: down
+
+laptop: "Laptop\nengine + local store\n1 IDLE watch + 3 task slots"
+phone: "Phone\nengine + local store\nbounded pass on push wake"
+work: "Second desktop\nengine + local store\n1 IDLE watch + 3 task slots"
+
+server: "Mail server\nsource of truth\none connection limit per account,\nshared by every device" {
+  shape: cylinder
+}
+
+laptop -> server
+phone -> server
+work -> server

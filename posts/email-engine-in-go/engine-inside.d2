@@ -1,0 +1,47 @@
+# layout: elk
+# vertical: sync
+
+**.style.bold: false
+direction: down
+
+surface: "Call(method, params) · Subscribe(fn)" {
+  style.stroke-width: 3
+}
+
+methods: "method table\nbuilt-ins + modules"
+
+surface -> methods
+
+search: "search"
+outbox: "outbox\nqueued local changes"
+ports: "Sync port" {style.stroke-dash: 4}
+modules: "modules\nkeys, contacts, product code"
+
+methods -> search
+methods -> outbox
+methods -> ports
+methods -> modules
+
+sync: Sync group {
+  actor: "actor per account\nqueue, slots, pool"
+  proto: "IMAP + SMTP clients\nper-account strategy"
+  actor -> proto
+}
+
+derive: "derive worker\nparse, sanitize, index"
+
+ports -> sync.actor
+outbox -> sync.actor: "replayed by"
+
+store: Local store {
+  label.near: bottom-center
+  meta: "meta.db\nindex, accounts, outbox\nalways open"
+  blobs: "blobs/\nraw messages, one file each"
+  content: "content.db\nsubjects, text, search\nencrypted, rebuildable"
+}
+
+sync.proto -> store.meta
+sync.proto -> store.blobs
+derive -> store.blobs: "reads"
+derive -> store.content: "writes"
+search -> store.content

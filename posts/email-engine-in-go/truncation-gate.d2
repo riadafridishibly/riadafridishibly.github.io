@@ -1,0 +1,21 @@
+# layout: elk
+
+**.style.bold: false
+direction: down
+
+status: "STATUS folder (MESSAGES)\nwhile not selected"
+select: "SELECT folder\nread EXISTS"
+check: "EXISTS < STATUS?" {shape: diamond}
+whole: "view is whole:\nenumerate UIDs,\ndelete what the server dropped"
+reread: "read the pair again"
+check2: "still lower?" {shape: diamond}
+trunc: "view is truncated" {style.stroke-width: 3}
+act: "suspend local deletes,\nmark folder incomplete,\nshow degraded state,\nkeep syncing new mail"
+
+status -> select -> check
+check -> whole: "no"
+check -> reread: "yes"
+reread -> check2
+check2 -> whole: "no"
+check2 -> trunc: "yes"
+trunc -> act

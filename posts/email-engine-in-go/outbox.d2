@@ -1,0 +1,19 @@
+shape: sequence_diagram
+
+**.style.bold: false
+
+ui: "UI"
+store: "local store"
+sync: "sync"
+server: "IMAP server"
+
+now: "milliseconds" {
+  ui -> store: "(1) mark three read: one transaction\nsets \\Seen, inserts an outbox row"
+  store -> ui: "(2) redraw from the store"
+}
+
+later: "in the background, when online" {
+  sync -> server: '(3) UID STORE 4821,4822,4830 +FLAGS.SILENT (\Seen)'
+  server -> sync: "OK"
+  sync -> store: "(4) on OK, delete the row;\non failure, keep it and retry"
+}

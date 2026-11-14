@@ -1,0 +1,25 @@
+# layout: elk
+
+**.style.bold: false
+direction: right
+
+agent: "agent\n(your machine)"
+
+server: Server {
+  sshd22: "system sshd :22"
+  lo: "127.0.0.1 only" {
+    label.near: bottom-center
+    style.stroke-dash: 4
+    throwaway: "throwaway sshd\n:2223, as root" {
+      style.stroke-width: 3
+    }
+  }
+  sshd22 -> lo.throwaway: "relayed" {
+    style.stroke-dash: 4
+  }
+}
+
+agent -> server.sshd22: "outer SSH: you"
+agent -> server.sshd22: "inner SSH: root" {
+  style.stroke-dash: 4
+}

@@ -1,0 +1,92 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><script>(function(){var e=null;try{e=localStorage.getItem("theme")}catch{}e!=="light"&&e!=="dark"&&(e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),document.documentElement.setAttribute("data-theme",e)})()</script><title>AI Coding Tools: My Experience and Practical Tips · random thoughts</title><meta name=description content="What I learned using Cursor and Claude day to day — planning with AI, staying in control of the diff, leaning on git, and why the language you pick matters."><meta name=author content="Riad Afridi Shibly"><link rel=canonical href=https://riad.run/posts/ai-coding/><meta name=color-scheme content="light dark"><meta name=theme-color content="#fcfbf8" media="(prefers-color-scheme: light)"><meta name=theme-color content="#262523" media="(prefers-color-scheme: dark)"><link rel=icon href=/favicon.ico sizes=48x48><link rel=icon href=/favicon-32.png type=image/png sizes=32x32><link rel=apple-touch-icon href=/apple-touch-icon.png><link rel=preload href=/fonts/inter/inter-latin-opsz-normal.woff2 as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/main.min.7d5e943cd9a7ad3e0faad4525882ddaaedee5329bc4ed21953f12ec6613244d3.css integrity="sha256-fV6UPNmnrT4PqtRSWILdqu3uUym8TtIZU/EuxmEyRNM=" crossorigin=anonymous><meta property="og:url" content="https://riad.run/posts/ai-coding/"><meta property="og:site_name" content="random thoughts"><meta property="og:title" content="AI Coding Tools: My Experience and Practical Tips"><meta property="og:description" content="What I learned using Cursor and Claude day to day — planning with AI, staying in control of the diff, leaning on git, and why the language you pick matters."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-05-31T00:00:00+00:00"><meta property="article:modified_time" content="2025-05-31T00:00:00+00:00"><meta property="article:tag" content="ai"><meta property="article:tag" content="llm"><meta property="article:tag" content="cursor"><meta property="article:tag" content="claude"><meta property="article:tag" content="developer-tools"><meta name=twitter:card content="summary"><meta name=twitter:title content="AI Coding Tools: My Experience and Practical Tips"><meta name=twitter:description content="What I learned using Cursor and Claude day to day — planning with AI, staying in control of the diff, leaning on git, and why the language you pick matters."><meta name=twitter:site content="@afridishibly"><meta itemprop=name content="AI Coding Tools: My Experience and Practical Tips"><meta itemprop=description content="What I learned using Cursor and Claude day to day — planning with AI, staying in control of the diff, leaning on git, and why the language you pick matters."><meta itemprop=datePublished content="2025-05-31T00:00:00+00:00"><meta itemprop=dateModified content="2025-05-31T00:00:00+00:00"><meta itemprop=wordCount content="1303"><meta itemprop=keywords content="ai,llm,cursor,claude,developer-tools"><script async src="https://www.googletagmanager.com/gtag/js?id=G-B5NMTPYJRV"></script><script>if(navigator.doNotTrack!=="1"&&window.doNotTrack!=="1"){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B5NMTPYJRV")}</script></head><body class="font-webfont font-inter"><a class=skip-link href=#main>Skip to content</a><header class=site-header><div class="container header-inner"><a class=site-title href=/>random thoughts</a><nav class=site-nav aria-label=Main><ul><li><a href=/posts/ aria-current=page>Posts</a></li><li><a href=/tags/>Tags</a></li><li><a href=/about/>About</a></li></ul></nav><a class="header-button search-link" href=/search/ aria-label=Search title="Search (press /)"><svg class="icon icon-search" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.2-4.2"/></svg></a>
+<button class="header-button theme-toggle" type=button id=theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="icon icon-sun" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v2m0 14v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2m14 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/><circle cx="12" cy="12" r="4"/></svg><svg class="icon icon-moon" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button></div></header><main id=main class=site-main><article class="post has-toc" data-pagefind-body><header class=post-header><h1 class=post-title>AI Coding Tools: My Experience and Practical Tips</h1><p class=post-meta data-pagefind-ignore><time datetime=2025-05-31 data-pagefind-meta=date>May 31, 2025</time>
+<span aria-hidden=true>·</span>
+<span>7 min read</span>
+<span aria-hidden=true>·</span>
+<span class=meta-tags data-pagefind-meta=tags><a href=/tags/ai/>ai</a>, <a href=/tags/llm/>llm</a>, <a href=/tags/cursor/>cursor</a>, <a href=/tags/claude/>claude</a>, <a href=/tags/developer-tools/>developer-tools</a></span></p></header><details class=toc id=toc data-pagefind-ignore><summary>On this page</summary><nav id=TableOfContents><ul><li><a href=#reimagine-anything>Reimagine anything</a></li><li><a href=#planning-with-ai>Planning with AI</a></li><li><a href=#learning-with-ai>Learning with AI</a></li><li><a href=#be-in-control>Be in control</a></li><li><a href=#git-is-your-friend>Git is your friend</a></li><li><a href=#language-matters>Language matters</a></li><li><a href=#the-way-you-think-changes-with-llms>The way you think changes with LLMs</a></li><li><a href=#cursor-rules>Cursor Rules</a></li></ul></nav></details><div class="prose post-body"><p>2024 and early 2025 were one hell of a wild ride. Lots of AI tools emerged from
+different companies. It&rsquo;s not all that new, some were being developed for quite
+some time. And as a matter of fact, they are becoming more and more usable day by
+day. Recently, Anthropic released their latest model <code>claude-4-sonnet</code>, which is
+great for coding as it writes fewer comments and can manage smaller tasks quite
+well. I&rsquo;ve been using Cursor (aka the AI editor) for quite some time. There are
+also other alternatives. But as of writing this today, Cursor works best for me.
+I got my subscription because I kinda liked the tab model. If you&rsquo;ve been exposed to
+any of the AI editors, you already know it can understand the pattern. If you
+change something in one line, it can understand and then can apply the
+same change for the next couple of lines, which is quite good and quite enjoyable
+too. No need to learn vim macro for that. Sorry vim users (myself included, I
+use vim mode all the time). Though in most cases with its tab model, it goes way
+beyond that simple change.</p><p>For the first few days, I haven&rsquo;t used any single thing in AGENT mode (that is
+basically some kind of privileged option to edit files and modify the file
+system). So I slowly started using agent mode and Oh boy! It can do a lot of
+things, saving a ton of time. It basically lets you iterate fast! Very fast! Soon
+I have a branch named <code>vibe</code> in all the projects I use cursor with. It can
+write brand new code quite well, it can apply changes, it can help with
+debugging a lot of things. I&rsquo;m not talking about breakpoint debugging, rather
+debugging system problems in general. One time I had a problem with MacOS
+certificate installation, with commandline, Keychain Access GUI, and golang.
+Cursor wrote multiple scripts, ran multiple commands to verify, and eventually
+it accepted that it&rsquo;s very weird. I don&rsquo;t let cursor go wild and run any command
+it likes, rather every time it tries to run any command, I must allow that. That
+way I can see what it&rsquo;s trying to run.</p><h2 id=reimagine-anything>Reimagine anything<a class=heading-anchor data-pagefind-ignore href=#reimagine-anything aria-label="Link to this section">#</a></h2><p>If you&rsquo;re not a graphics designer or you&rsquo;re a backend developer with little to
+no design knowledge, you might&rsquo;ve faced this. Whenever you try to
+implement a basic UI, it looks ugly. It happens to me all the time. That&rsquo;s why
+when working with react, we use component libraries. (ShadCN changed the game
+quite a bit. Though it&rsquo;s outside the scope of this topic). With AI, you can
+create beautiful UI, in a matter of seconds or minutes. I&rsquo;ve designed and got
+idea from <code>v0</code> for my few personal projects. Most of the time it worked pretty
+well for me as an initial iteration. Which then I can fine tune later. AI may
+not make the best UI for your application, but it&rsquo;ll definitely generate
+something for you to get going. I experienced some theme changes with AI. I
+didn&rsquo;t like the colors, so I asked it to reimagine the colors, use its
+creativity (or hallucinate, depends on how you look at it). Colors turned out
+great for that specific use case.</p><h2 id=planning-with-ai>Planning with AI<a class=heading-anchor data-pagefind-ignore href=#planning-with-ai aria-label="Link to this section">#</a></h2><p>When you&rsquo;re brainstorming and you&rsquo;re looking for some ideas, you can create a
+README file and ask AI to populate the specific details. It&rsquo;ll spit out some
+ideas about the project, particular features, gotchas, etc. Now you have a playbook
+to fine tune. You can go through the docs and you might get some insights to
+that. But if you&rsquo;re well versed in that subject, you may not like the idea and
+you should rather go with your own.</p><h2 id=learning-with-ai>Learning with AI<a class=heading-anchor data-pagefind-ignore href=#learning-with-ai aria-label="Link to this section">#</a></h2><p>You can learn a lot of things from AI. You can tell it to implement certain
+things, and you can now visit those docs and go through the code. You need to
+understand why it wrote that thing. And while you&rsquo;re verifying those things, you
+can learn about operating system APIs, patterns, specific ways of doing things
+that you may not be aware of.</p><h2 id=be-in-control>Be in control<a class=heading-anchor data-pagefind-ignore href=#be-in-control aria-label="Link to this section">#</a></h2><p>As of today, the big bump you&rsquo;ll hit is the context size. Try to keep chat size
+very small. For unrelated things, create new chat. It can create messy situations
+quite easily if you&rsquo;re not careful enough. Once I tried to replace the theming
+system in a react application, oh boy! It deleted a lot of code and totally
+messed things up. Because it went through all the project files and eventually
+created a messy situation. But when I instructed it for smaller changes, it
+worked quite well out of the box.</p><h2 id=git-is-your-friend>Git is your friend<a class=heading-anchor data-pagefind-ignore href=#git-is-your-friend aria-label="Link to this section">#</a></h2><p>Previously, I said I use the <code>vibe</code> branch a lot. Why? When working with LLMs in
+your codebase, you want to keep track of your changes. If you think some changes
+are good. Just commit it. If you&rsquo;re not careful enough, it&rsquo;ll mess up with good
+code as well. And if there are lots and lots of changes and if you&rsquo;re not
+managing them with git, you&rsquo;re cooked. So always commit, revert, reset. Git
+integration with VS Code based code editors is very good for most tasks. You
+can stage hunks, restore hunks, or reset the whole file. Which will save a ton of
+time. Learn git basics and apply them effectively. Not just when you&rsquo;re using
+LLMs. In general, you should learn and be proficient in git.</p><h2 id=language-matters>Language matters<a class=heading-anchor data-pagefind-ignore href=#language-matters aria-label="Link to this section">#</a></h2><p>All these things will only work if you choose a domain which LLMs can help you
+with. If you&rsquo;re using React, ReactNative, TypeScript, or Golang, it&rsquo;ll help you
+very well to write code and implement features. Not so when it comes to obscure
+things like windows driver development. I once tried windows callout driver
+development, and LLMs hallucinated lots of Operating System APIs that don&rsquo;t
+exist on windows. That was pre <code>sonnet-4</code> era. Maybe it has changed, who knows!
+Sonnet-4 mostly gives working code, which is quite good, but if it starts
+messing things up, you better stop it right there.</p><h2 id=the-way-you-think-changes-with-llms>The way you think changes with LLMs<a class=heading-anchor data-pagefind-ignore href=#the-way-you-think-changes-with-llms aria-label="Link to this section">#</a></h2><p>When working with LLMs, you also need to think about a lot of constraints. You
+need to know the limitations of the LLM. You need to explain your requirements
+such a way that LLM can make sense of it. You can&rsquo;t just be vague and assume the
+LLM will understand what you&rsquo;re talking about. Maybe some human will understand
+given that previous context. But with LLMs, you need to think about the context,
+what it knows, what context you should give it. Effective usage requires you to
+go through some trial and errors. But if you get the idea, you&rsquo;ll only get better
+using LLMs.</p><h2 id=cursor-rules>Cursor Rules<a class=heading-anchor data-pagefind-ignore href=#cursor-rules aria-label="Link to this section">#</a></h2><p>When working on a project, you might set some base rules to attach to every
+message. For example, if you&rsquo;re using cursor with a ReactNative project and you
+don&rsquo;t specify this, the LLM might get you wrong and implement something which only
+makes sense in the context of web. For example, usage of <code>html</code> tags,
+<code>localStorage</code>, etc. But if you set the rule to let the LLM know this project is a
+ReactNative project, it won&rsquo;t do that mistake. Same thing goes for a package
+manager. It may try to run npm for most tasks, but if you&rsquo;re using <code>bun</code> for
+your project, you better set a rule for that. That way it&rsquo;s much more effective
+and you don&rsquo;t have to fight with it for that.</p><p>It&rsquo;s been pretty fun experimenting with all of these. I&rsquo;m just enjoying my last
+few days as a developer, because AI will eventually replace me and all the
+developers. Then we all will start farming&mldr; See you there&mldr;</p></div><footer class=post-footer data-pagefind-ignore=all><ul class=tag-list aria-label=Tags><li><a href=/tags/ai/>#ai</a></li><li><a href=/tags/llm/>#llm</a></li><li><a href=/tags/cursor/>#cursor</a></li><li><a href=/tags/claude/>#claude</a></li><li><a href=/tags/developer-tools/>#developer-tools</a></li></ul><nav class=post-nav aria-label="More posts"><a class=prev href=/posts/migrating-gitlab-to-forgejo/><span class=label><svg class="icon icon-arrow-left" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7"/></svg> Newer</span><span class=title>Migrating from GitLab CE to Forgejo</span></a>
+<a class=next href=/posts/http11-redirects/><span class=label>Older <svg class="icon icon-arrow-right" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span><span class=title>Understanding HTTP/1.1: Redirects in Go (Part 3)</span></a></nav></footer></article></main><footer class=site-footer><div class="container footer-inner"><p>© 2026 Riad Afridi Shibly</p><p class=footer-links><a href=/feed.xml><svg class="icon icon-rss" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg> RSS</a>
+<span>Built with <a href=https://gohugo.io/ rel="external noopener">Hugo</a></span></p></div></footer><script src=/js/main.min.c31771b896e9224fec87d6216bf922aab7eab605c8e721e90ae3850f526f5371.js defer></script></body></html>
